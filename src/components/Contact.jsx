@@ -49,29 +49,38 @@ const Contact = () => {
                             Have a project in mind or just want to say hi? I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
                         </p>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-                            {/* Email Link (First Item) */}
-                            {SOCIAL_LINKS.filter(l => l.name === 'Email').map((link, i) => (
-                                <a key={i} href={link.url} style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '1.1rem' }}>
-                                    <div style={{ background: 'rgba(255,255,255,0.05)', padding: '0.8rem', borderRadius: '50%' }}>
-                                        <link.icon className="text-accent-cyan" />
-                                    </div>
-                                    {link.text || "Email Me"}
-                                </a>
-                            ))}
-
-                            {/* Social Icons */}
-                            <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                                {SOCIAL_LINKS.filter(l => l.name !== 'Email').map((link, i) => (
-                                    <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                                        style={{ background: 'rgba(255,255,255,0.05)', padding: '0.8rem', borderRadius: '50%', transition: '0.2s' }}
-                                        className="hover-scale">
-                                        <link.icon />
+                        <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem' }}>
+                            {SOCIAL_LINKS.map((link, i) => {
+                                const isMail = link.url.startsWith('mailto');
+                                return (
+                                    <a key={i} href={link.url}
+                                        target={isMail ? undefined : "_blank"}
+                                        rel={isMail ? undefined : "noopener noreferrer"}
+                                        style={{
+                                            background: 'rgba(255,255,255,0.05)',
+                                            padding: '1rem',
+                                            borderRadius: '50%',
+                                            transition: '0.2s',
+                                            color: 'var(--text-primary)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}
+                                        onMouseOver={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(-5px)';
+                                            e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                                        }}
+                                        onMouseOut={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                                        }}
+                                        title={link.name}
+                                    >
+                                        <link.icon size={24} className={link.name === 'Email' ? "text-accent-cyan" : ""} />
                                     </a>
-                                ))}
-                            </div>
-
+                                );
+                            })}
                         </div>
                     </div>
 
